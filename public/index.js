@@ -174,9 +174,16 @@ for (var i = 0; i < deliveries.length; i++){
             }
           }
           price = deliveries[i].distance*truckers[j].pricePerKm + deliveries[i].volume*truckers[j].pricePerVolume
+          deliveries[i].price = price;
+
           commission = price*0.3;
           treasury = Math.round(deliveries[i].distance/500)+1;
           ok = commission*0.5 - treasury;
+
+          //deliveries.commission.insurance = commission*0.5;
+          //deliveries.commission.treasury = treasury;
+          //deliveries.commission.convargo = ok;
+
           alert("Commision = " + commission);
           alert("Treasury = " + treasury);
           alert("covarnttthooo = " + ok);
