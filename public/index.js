@@ -1,6 +1,5 @@
 'use strict';
 
-const deliverables = 0;
 
 //alert("Hello");
 console.log(5+1);
@@ -156,11 +155,26 @@ const actors = [{
 // for each delivery
 for (var i = 0; i < deliveries.length; i++){
     var obj = deliveries[i];
+    var price = 0;
+    var sale = 1;
 
     // find corresponding trucker
     for (var j = 0; j < truckers.length; j++){
         if (deliveries[i].truckerId == truckers[j].id){
-          alert(deliveries[i].distance*truckers[j].pricePerKm + deliveries[i].volume*truckers[j].pricePerVolume);
+          if (deliveries[i].volume > 5){
+            sale = 0.1;
+            if (deliveries[i].volume > 10){
+              sale = 0.7;
+              if (deliveries[i].volume > 25){
+                sale = 0.5;
+              }
+            }
+          }
+          price = deliveries[i].distance*truckers[j].pricePerKm + deliveries[i].volume*truckers[j].pricePerVolume
+          alert("Before offer:" + price);
+          price = price*sale;
+          console.log(price);
+          alert(price);
         }
     }
 }
@@ -170,5 +184,3 @@ alert("Exit");
 console.log(truckers);
 console.log(deliveries);
 console.log(actors);
-
-console.log(deliverables);
