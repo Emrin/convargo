@@ -157,6 +157,9 @@ for (var i = 0; i < deliveries.length; i++){
     var obj = deliveries[i];
     var price = 0;
     var sale = 1;
+    var commission = 0;
+    var treasury = 0;
+    var ok = 0;
 
     // find corresponding trucker
     for (var j = 0; j < truckers.length; j++){
@@ -171,6 +174,12 @@ for (var i = 0; i < deliveries.length; i++){
             }
           }
           price = deliveries[i].distance*truckers[j].pricePerKm + deliveries[i].volume*truckers[j].pricePerVolume
+          commission = price*0.3;
+          treasury = Math.round(deliveries[i].distance/500)+1;
+          ok = commission*0.5 - treasury;
+          alert("Commision = " + commission);
+          alert("Treasury = " + treasury);
+          alert("covarnttthooo = " + ok);
           alert("Before offer:" + price);
           price = price*sale;
           console.log(price);
