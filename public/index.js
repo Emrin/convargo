@@ -1,5 +1,10 @@
 'use strict';
 
+const deliverables = 0;
+
+//alert("Hello");
+console.log(5+1);
+
 //list of truckers
 //useful for ALL 5 exercises
 var truckers = [{
@@ -144,6 +149,26 @@ const actors = [{
   }]
 }];
 
+//var shippingPrice = deliveries.distance*truckers.pricePerKm + deliveries.volume*truckers.pricePerVolume;
+
+//for (sample in deliveries){alert("AAAA");}
+
+// for each delivery
+for (var i = 0; i < deliveries.length; i++){
+    var obj = deliveries[i];
+
+    // find corresponding trucker
+    for (var j = 0; j < truckers.length; j++){
+        if (deliveries[i].truckerId == truckers[j].id){
+          alert(deliveries[i].distance*truckers[j].pricePerKm + deliveries[i].volume*truckers[j].pricePerVolume);
+        }
+    }
+}
+alert("Exit");
+
+
 console.log(truckers);
 console.log(deliveries);
 console.log(actors);
+
+console.log(deliverables);
