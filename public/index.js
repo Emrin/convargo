@@ -159,11 +159,12 @@ for (var i = 0; i < deliveries.length; i++){
     var sale = 1;
     var commission = 0;
     var treasury = 0;
-    var ok = 0;
+    var convargo = 0;
+    var deductibles = 0;
 
     // find corresponding trucker
     for (var j = 0; j < truckers.length; j++){
-        if (deliveries[i].truckerId == truckers[j].id){
+        if (deliveries[i].truckerId === truckers[j].id){
           if (deliveries[i].volume > 5){
             sale = 0.1;
             if (deliveries[i].volume > 10){
@@ -174,23 +175,44 @@ for (var i = 0; i < deliveries.length; i++){
             }
           }
           price = deliveries[i].distance*truckers[j].pricePerKm + deliveries[i].volume*truckers[j].pricePerVolume
+          alert("Before offer: " + price);
+          price = price*sale;
+          alert("After offer: " + price);
           deliveries[i].price = price;
+          console.log(price);
+
+          if (deliveries[i].options.deductibleReduction){
+            deductibles = deliveries[i].volume;
+            price = price + deductibles;
+            alert("Deductible detected: " + deductibles);
+          }
+
 
           commission = price*0.3;
           treasury = Math.round(deliveries[i].distance/500)+1;
-          ok = commission*0.5 - treasury;
+          convargo = commission*0.5 - treasury;
 
-          //deliveries.commission.insurance = commission*0.5;
-          //deliveries.commission.treasury = treasury;
-          //deliveries.commission.convargo = ok;
+          deliveries[i].commission.insurance = commission*0.5;
+          deliveries[i].commission.treasury = treasury;
+          deliveries[i].commission.convargo = convargo;
 
           alert("Commision = " + commission);
           alert("Treasury = " + treasury);
-          alert("covarnttthooo = " + ok);
-          alert("Before offer:" + price);
-          price = price*sale;
-          console.log(price);
-          alert(price);
+          alert("Convargo = " + convargo);
+
+          // paying the actors
+          actors[i].payment[0].amount = price;
+          actors[i].payment[1].amount = price - commission;
+          actors[i].payment[2].amount = commission*0.5;
+          actors[i].payment[3].amount = treasury;
+          actors[i].payment[4].amount = convargo + deductibles;
+          alert("Shipper:" + actors[i].payment[0].amount);
+          alert("Trucker:"+ actors[i].payment[1].amount);
+          alert("Insurance:"+ actors[i].payment[2].amount);
+          alert("Treasury:"+ actors[i].payment[3].amount);
+          alert("Convargo:"+ actors[i].payment[4].amount);
+
+
         }
     }
 }
